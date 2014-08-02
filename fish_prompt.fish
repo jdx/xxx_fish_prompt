@@ -1,11 +1,4 @@
 function fish_prompt
-  set -l last_status $status
-  set -l last_status_output ""
-
-  if [ $last_status -ne 0 ]
-    set last_status_output $last_status " "
-  end
-
   if not set -q -g __fish_robbyrussell_functions_defined
     set -g __fish_robbyrussell_functions_defined
     function _git_branch_name
@@ -37,4 +30,11 @@ function fish_prompt
   end
 
   echo -s $xxx ' ' $cwd $git_info $normal ' ' $red $last_status_output $normal
+end
+
+function fish_right_prompt
+  set -l last_status $status
+  if [ $last_status -ne 0 ]
+    echo -s (set_color red) "#" $last_status (set_color normal)
+  end
 end

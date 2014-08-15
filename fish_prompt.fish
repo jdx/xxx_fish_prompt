@@ -20,16 +20,17 @@ function fish_prompt
   set -l cwd $cyan(prompt_pwd)
 
   if [ (_git_branch_name) ]
-    set -l git_branch $red(_git_branch_name)
-    set git_info "$bluegit$blue:($git_branch$blue)"
-
+    set -l git_branch $yellow(_git_branch_name)
     if [ (_is_git_dirty) ]
-      set -l dirty "$yellow ✗"
-      set git_info "$git_info$dirty"
+      set git_info ":($git_branch$red!$blue)"
+    else
+      set git_info ":($git_branch$blue)"
     end
   end
 
-  echo -s $xxx ' ' $cwd $git_info $normal ' ' $red $last_status_output $normal
+  set -l ruby_version (rbenv version-name)
+
+  echo -s "$xxx $ruby_version $cwd$git_info $normal"
 end
 
 function fish_right_prompt
